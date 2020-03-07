@@ -23,7 +23,7 @@ export const initialState: State = appAdapter.getInitialState({
   loaded: false
 });
 
-const appReducer = createReducer(
+export const appReducer = createReducer(
   initialState,
   on(AppActions.loadApp, state => ({...state, loaded: false, error: null})),
   on(AppActions.loadAppSuccess, (state, {app}) =>

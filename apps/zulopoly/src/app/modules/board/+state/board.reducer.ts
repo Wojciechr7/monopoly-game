@@ -1,15 +1,15 @@
 import {Action, createReducer, on} from '@ngrx/store';
 import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
-
 import * as BoardActions from './board.actions';
 import {BoardEntity} from './board.models';
+import {BOARD_SIZE} from "../../game/helpers/game-settings";
+import {BoardFieldModel} from "../models/board-field.model";
 
 export const BOARD_FEATURE_KEY = 'board';
 
 export interface State extends EntityState<BoardEntity> {
-  selectedId?: string | number; // which Board record has been selected
-  loaded: boolean; // has the Board list been loaded
-  error?: string | null; // last none error (if any)
+  boardSize: number;
+  boardFields: BoardFieldModel[][];
 }
 
 export interface BoardPartialState {
@@ -19,23 +19,42 @@ export interface BoardPartialState {
 export const boardAdapter: EntityAdapter<BoardEntity> = createEntityAdapter<BoardEntity>();
 
 export const initialState: State = boardAdapter.getInitialState({
-  // set initial required properties
-  loaded: false
+  boardSize: BOARD_SIZE,
+  boardFields: [...Array(BOARD_SIZE)].map(() => [...Array(BOARD_SIZE)])
 });
 
 const boardReducer = createReducer(
   initialState,
-  on(BoardActions.loadBoard, state => ({
-    ...state,
-    loaded: false,
-    error: null
-  })),
-  on(BoardActions.loadBoardSuccess, (state, {board}) =>
-    boardAdapter.addAll(board, {...state, loaded: true})
+  on(BoardActions.BoardComponentLoaded, state => {
+      let index = 0;
+      console.log(1112);
+      return {
+        ...state,
+        boardFields: state.boardFields.map((xField: BoardFieldModel[], x: number) => {
+          return xField.map((yField: BoardFieldModel, y: number) => {
+            return {...yField, index: index++, x, y}
+          })
+        })
+      }
+    }
   ),
-  on(BoardActions.loadBoardFailure, (state, {error}) => ({...state, error}))
+  /*  on(BoardActions.loadBoardSuccess, (state, { board }) =>
+      boardAdapter.addAll(board, { ...state, loaded: true })
+    ),
+    on(BoardActions.loadBoardFailure, (state, { error }) => ({ ...state, error }))*/
 );
 
 export function reducer(state: State | undefined, action: Action) {
   return boardReducer(state, action);
 }
+
+
+/*
+boardFields: state.boardFields.map((field: BoardFieldModel[], x: number) => {
+  return field.map((field: BoardFieldModel, y: number) => {
+    return {
+      ...field,
+
+    }
+  })
+})*/

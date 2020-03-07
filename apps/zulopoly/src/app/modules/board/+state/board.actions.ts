@@ -1,9 +1,8 @@
-import {createAction, props} from '@ngrx/store';
-import {BoardEntity} from './board.models';
+import {createAction} from '@ngrx/store';
 
-export const loadBoard = createAction('[Board] Load Board');
+export const BoardComponentLoaded = createAction('[Board] Board Component Loaded');
 
-export const loadBoardSuccess = createAction(
+/*export const loadBoardSuccess = createAction(
   '[Board] Load Board Success',
   props<{ board: BoardEntity[] }>()
 );
@@ -11,4 +10,4 @@ export const loadBoardSuccess = createAction(
 export const loadBoardFailure = createAction(
   '[Board] Load Board Failure',
   props<{ error: any }>()
-);
+);*/

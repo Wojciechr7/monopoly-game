@@ -8,7 +8,9 @@ export const getBoardState = createFeatureSelector<BoardPartialState, State>(
 
 const {selectAll, selectEntities} = boardAdapter.getSelectors();
 
-export const getBoardLoaded = createSelector(
+export const getBoardFields = createSelector(getBoardState, (state: State) => state.boardFields);
+
+/*export const getBoardLoaded = createSelector(
   getBoardState,
   (state: State) => state.loaded
 );
@@ -37,4 +39,4 @@ export const getSelected = createSelector(
   getBoardEntities,
   getSelectedId,
   (entities, selectedId) => selectedId && entities[selectedId]
-);
+);*/
