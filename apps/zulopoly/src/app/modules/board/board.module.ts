@@ -8,6 +8,7 @@ import {EffectsModule} from '@ngrx/effects';
 import * as fromBoard from './+state/board.reducer';
 import {BoardEffects} from './+state/board.effects';
 import {BoardFacade} from './+state/board.facade';
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 @NgModule({
   declarations: [BoardComponent, FieldComponent],
@@ -15,7 +16,8 @@ import {BoardFacade} from './+state/board.facade';
     CommonModule,
     BoardRoutingModule,
     StoreModule.forFeature(fromBoard.BOARD_FEATURE_KEY, fromBoard.reducer),
-    EffectsModule.forFeature([BoardEffects])
+    EffectsModule.forFeature([BoardEffects]),
+    FlexLayoutModule
   ],
   providers: [BoardFacade]
 })

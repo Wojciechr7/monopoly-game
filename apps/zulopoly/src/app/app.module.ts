@@ -12,6 +12,7 @@ import {appReducer, initialState as appInitialState} from './+state/app.reducer'
 import {environment} from '../environments/environment';
 import {routerReducer, StoreRouterConnectingModule} from '@ngrx/router-store';
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 @NgModule({
   declarations: [AppComponent],
@@ -43,7 +44,7 @@ import {StoreDevtoolsModule} from "@ngrx/store-devtools";
     RouterModule,
     LayoutModule,
     StoreRouterConnectingModule.forRoot(),
-
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {BoardFieldModel} from "../../models/board-field.model";
 
 @Component({
   selector: 'zulopoly-field',
@@ -7,10 +8,16 @@ import {Component, OnInit} from '@angular/core';
 })
 export class FieldComponent implements OnInit {
 
+  @Input() field: BoardFieldModel;
+
   constructor() {
   }
 
   ngOnInit(): void {
+  }
+
+  test() {
+    console.log(this.field);
   }
 
 }

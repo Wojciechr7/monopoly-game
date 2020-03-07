@@ -1,4 +1,6 @@
 <p>board works!</p>
-<div class="board">
-
+<div class="board" fxLayoutAlign="column">
+  <div *ngFor="let xBoardField of boardFields$ | async" class="board-row" fxFlex="auto">
+    <zulopoly-field *ngFor="let yBoardField of xBoardField" [field]="yBoardField"></zulopoly-field>
+  </div>
 </div>
