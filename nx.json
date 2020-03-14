@@ -23,6 +23,12 @@
     },
     "api-interfaces": {
       "tags": []
+    },
+    "base": {
+      "tags": []
+    },
+    "style": {
+      "tags": []
     }
   }
 }

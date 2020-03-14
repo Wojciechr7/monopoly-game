@@ -9,6 +9,7 @@ import {GameEffects} from './+state/game.effects';
 import {GameFacade} from './+state/game.facade';
 import { ChatComponent } from './components/chat/chat.component';
 import { FormsModule } from '@angular/forms';
+import { BaseModule } from '@zulopoly/base';
 
 @NgModule({
   declarations: [GameComponent, ChatComponent],
@@ -17,7 +18,8 @@ import { FormsModule } from '@angular/forms';
     GameRoutingModule,
     StoreModule.forFeature(fromGame.GAME_FEATURE_KEY, fromGame.reducer),
     EffectsModule.forFeature([GameEffects]),
-    FormsModule
+    FormsModule,
+    BaseModule
   ],
   providers: [GameFacade]
 })
