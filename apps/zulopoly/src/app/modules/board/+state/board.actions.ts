@@ -1,13 +1,16 @@
-import {createAction} from '@ngrx/store';
+import {createAction, props} from '@ngrx/store';
+import {FieldsLoadedModel} from "../../../../../../../libs/api-interfaces/src/lib/models/fields-loaded.model";
 
 export const BoardComponentLoaded = createAction('[Board] Board Component Loaded');
 
-/*export const loadBoardSuccess = createAction(
-  '[Board] Load Board Success',
-  props<{ board: BoardEntity[] }>()
+export const loadFields = createAction('[Board] load Fields');
+
+export const loadFieldsSuccess = createAction(
+  '[Board] Load Fields Success',
+  props<{ fields: FieldsLoadedModel }>()
 );
 
-export const loadBoardFailure = createAction(
-  '[Board] Load Board Failure',
+export const loadFieldsFailure = createAction(
+  '[Board] Load Fields Failure',
   props<{ error: any }>()
-);*/
+);

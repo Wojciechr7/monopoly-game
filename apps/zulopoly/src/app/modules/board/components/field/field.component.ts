@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {BoardFieldModel} from "../../models/board-field.model";
+import {FieldBaseModel} from "../../../../../../../../libs/api-interfaces/src/lib/models/fields/field-base.model";
 
 @Component({
   selector: 'zulopoly-field',
@@ -8,7 +8,7 @@ import {BoardFieldModel} from "../../models/board-field.model";
 })
 export class FieldComponent implements OnInit {
 
-  @Input() field: BoardFieldModel;
+  @Input() field: FieldBaseModel;
 
   constructor() {
   }

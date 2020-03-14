@@ -9,9 +9,21 @@ import * as fromBoard from './+state/board.reducer';
 import {BoardEffects} from './+state/board.effects';
 import {BoardFacade} from './+state/board.facade';
 import {FlexLayoutModule} from "@angular/flex-layout";
+import {PropertyComponent} from './components/field/components/property/property.component';
+import {StartComponent} from './components/field/components/start/start.component';
+import {JailComponent} from './components/field/components/jail/jail.component';
+import {GoToJailComponent} from './components/field/components/go-to-jail/go-to-jail.component';
+import {ParkingComponent} from './components/field/components/parking/parking.component';
+import {RailwaysComponent} from './components/field/components/railways/railways.component';
+import {PowerPlantWaterworksComponent} from './components/field/components/power-plant-waterworks/power-plant-waterworks.component';
+import {TaxComponent} from './components/field/components/tax/tax.component';
+import {ChanceComponent} from './components/field/components/chance/chance.component';
+import {CommunityChestComponent} from './components/field/components/community-chest/community-chest.component';
+import {CenterComponent} from './components/field/components/center/center.component';
+import {DynamicFieldDirective} from "./directives/dynamic-field.directive";
 
 @NgModule({
-  declarations: [BoardComponent, FieldComponent],
+  declarations: [BoardComponent, FieldComponent, PropertyComponent, StartComponent, JailComponent, GoToJailComponent, ParkingComponent, RailwaysComponent, PowerPlantWaterworksComponent, TaxComponent, ChanceComponent, CommunityChestComponent, CenterComponent, DynamicFieldDirective],
   imports: [
     CommonModule,
     BoardRoutingModule,

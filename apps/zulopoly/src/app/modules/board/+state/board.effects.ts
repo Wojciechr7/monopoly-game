@@ -1,12 +1,14 @@
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, createEffect, Effect, ofType} from '@ngrx/effects';
 import {DataPersistence} from '@nrwl/angular';
 import {BoardPartialState} from './board.reducer';
 import * as BoardActions from './board.actions';
 import {BoardComponent} from "../components/board/board.component";
-import {switchMap} from "rxjs/operators";
+import {catchError, map, switchMap} from "rxjs/operators";
 import {ActivatedRouteSnapshot} from "@angular/router";
 import {of} from "rxjs";
+import {BoardService} from "../services/board.service";
+import {FieldsLoadedModel} from "../../../../../../../libs/api-interfaces/src/lib/models/fields-loaded.model";
 
 @Injectable()
 export class BoardEffects {
@@ -16,7 +18,8 @@ export class BoardEffects {
       return of(a).pipe(
         switchMap(() => {
           return [
-            BoardActions.BoardComponentLoaded()
+            BoardActions.BoardComponentLoaded(),
+            BoardActions.loadFields()
           ]
         })
       )
@@ -25,6 +28,36 @@ export class BoardEffects {
       return null;
     }
   });
+
+  loadFields$ = createEffect(() => this.actions$.pipe(
+    ofType(BoardActions.loadFields),
+    switchMap(() => this.boardService.getBoardFields().pipe(
+      map((fields: FieldsLoadedModel) => BoardActions.loadFieldsSuccess({fields})),
+      catchError(error => of(BoardActions.loadFieldsFailure({error})))
+      )
+    ))
+  );
+
+
+  /*  loadFields$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType(BoardActions.loadFields),
+        fetch({
+          run: action => {
+            return this.boardService.getBoardFields().pipe(
+              map((fields: FieldsLoadedModel) => {
+                return BoardActions.loadFieldsSuccess({fields})
+              })
+            )
+          },
+
+          onError: (action, error) => {
+            console.error('Error', error);
+            return BoardActions.loadFieldsFailure({error});
+          }
+        })
+      )
+    );*/
 
   /*  loadBoard$ = createEffect(() =>
       this.actions$.pipe(
@@ -45,7 +78,8 @@ export class BoardEffects {
 
   constructor(
     private actions$: Actions,
-    private s: DataPersistence<BoardPartialState>
+    private s: DataPersistence<BoardPartialState>,
+    private boardService: BoardService
   ) {
   }
 }

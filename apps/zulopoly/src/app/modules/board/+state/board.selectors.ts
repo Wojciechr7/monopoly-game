@@ -1,5 +1,6 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store';
 import {BOARD_FEATURE_KEY, boardAdapter, BoardPartialState, State} from './board.reducer';
+import {FieldBaseModel} from "../../../../../../../libs/api-interfaces/src/lib/models/fields/field-base.model";
 
 // Lookup the 'Board' feature state managed by NgRx
 export const getBoardState = createFeatureSelector<BoardPartialState, State>(
@@ -8,7 +9,27 @@ export const getBoardState = createFeatureSelector<BoardPartialState, State>(
 
 const {selectAll, selectEntities} = boardAdapter.getSelectors();
 
-export const getBoardFields = createSelector(getBoardState, (state: State) => state.boardFields);
+/*export const getBoardFields = createSelector(getBoardState, (state: State) => state.boardFields);*/
+
+export const getTopBoardFields = createSelector(getBoardState, (state: State) => {
+  return sortFieldsByIndex(state.boardFields.filter((field: FieldBaseModel) => field.index > 20 && field.index < 32))
+});
+
+export const getRightBoardFields = createSelector(getBoardState, (state: State) => {
+  return sortFieldsByIndex(state.boardFields.filter((field: FieldBaseModel) => field.index > 31)).reverse()
+});
+
+export const getBottomBoardFields = createSelector(getBoardState, (state: State) => {
+  return sortFieldsByIndex(state.boardFields.filter((field: FieldBaseModel) => field.index > 0 && field.index < 12))
+});
+
+export const getLeftBoardFields = createSelector(getBoardState, (state: State) => {
+  return sortFieldsByIndex(state.boardFields.filter((field: FieldBaseModel) => field.index > 11 && field.index < 21)).reverse()
+});
+
+export function sortFieldsByIndex(fields: FieldBaseModel[]) {
+  return fields.sort((a, b) => (a.index > b.index) ? 1 : -1)
+}
 
 /*export const getBoardLoaded = createSelector(
   getBoardState,

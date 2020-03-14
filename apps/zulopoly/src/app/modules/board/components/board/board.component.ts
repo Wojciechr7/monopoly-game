@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BoardFacade} from "../../+state/board.facade";
-import {BoardFieldModel} from "../../models/board-field.model";
+import {BoardFacade, OrderedFields} from "../../+state/board.facade";
 import {BoardBase} from "../board-base/board-base";
 import {Observable} from "rxjs";
 import {tap} from "rxjs/operators";
@@ -12,7 +11,7 @@ import {tap} from "rxjs/operators";
 })
 export class BoardComponent extends BoardBase implements OnInit {
 
-  boardFields$: Observable<BoardFieldModel[][]>;
+  boardFields$: Observable<OrderedFields>;
 
   constructor(
     protected boardFacade: BoardFacade
