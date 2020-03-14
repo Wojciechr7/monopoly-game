@@ -12,6 +12,7 @@ import {appReducer, initialState as appInitialState} from './+state/app.reducer'
 import {environment} from '../environments/environment';
 import {routerReducer, StoreRouterConnectingModule} from '@ngrx/router-store';
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
+import { SocketIoModule } from 'ngx-socket-io';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +20,7 @@ import {StoreDevtoolsModule} from "@ngrx/store-devtools";
     BrowserModule,
     HttpClientModule,
     NxModule.forRoot(),
+/*    SocketIoModule.forRoot({ url: 'http://localhost:4200', options: {} }),*/
     StoreModule.forRoot(
       {router: routerReducer, app: appReducer}, {
         /*      runtimeChecks: {
