@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
-
 import {Action, select, Store} from '@ngrx/store';
-
 import * as fromBoard from './board.reducer';
 import * as BoardSelectors from './board.selectors';
 import {FieldBaseModel} from "../../../../../../../libs/api-interfaces/src/lib/models/fields/field-base.model";
@@ -14,10 +12,11 @@ export class BoardFacade {
     this.store.pipe(select(BoardSelectors.getTopBoardFields)),
     this.store.pipe(select(BoardSelectors.getRightBoardFields)),
     this.store.pipe(select(BoardSelectors.getBottomBoardFields)),
-    this.store.pipe(select(BoardSelectors.getLeftBoardFields))
+    this.store.pipe(select(BoardSelectors.getLeftBoardFields)),
+    this.store.pipe(select(BoardSelectors.getCenterField)),
   ).pipe(
-    map(([top, right, bottom, left]) => {
-      return {top, right, bottom, left}
+    map(([top, right, bottom, left, center]) => {
+      return {top, right, bottom, left, center}
     })
   );
   /*  boardFields$ = this.store.pipe(select(BoardSelectors.getBoardFields));*/
@@ -34,9 +33,10 @@ export class BoardFacade {
   }
 }
 
-export interface OrderedFields<T = FieldBaseModel[]> {
-  top: T;
-  right: T;
-  bottom: T;
-  left: T;
+export interface OrderedFields<T = FieldBaseModel> {
+  top: T[];
+  right: T[];
+  bottom: T[];
+  left: T[];
+  center: T;
 }

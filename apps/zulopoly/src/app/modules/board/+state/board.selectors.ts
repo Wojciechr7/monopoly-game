@@ -16,16 +16,20 @@ export const getTopBoardFields = createSelector(getBoardState, (state: State) =>
 });
 
 export const getRightBoardFields = createSelector(getBoardState, (state: State) => {
-  return sortFieldsByIndex(state.boardFields.filter((field: FieldBaseModel) => field.index > 31)).reverse()
+  return sortFieldsByIndex(state.boardFields.filter((field: FieldBaseModel) => field.index > 31))
 });
 
 export const getBottomBoardFields = createSelector(getBoardState, (state: State) => {
-  return sortFieldsByIndex(state.boardFields.filter((field: FieldBaseModel) => field.index > 0 && field.index < 12))
+  return sortFieldsByIndex(state.boardFields.filter((field: FieldBaseModel) => field.index > 0 && field.index < 12)).reverse()
 });
 
 export const getLeftBoardFields = createSelector(getBoardState, (state: State) => {
   return sortFieldsByIndex(state.boardFields.filter((field: FieldBaseModel) => field.index > 11 && field.index < 21)).reverse()
 });
+
+export const getCenterField = createSelector(getBoardState, (state: State) => state.boardFields.find((field: FieldBaseModel) => {
+  return field.index === 0;
+}));
 
 export function sortFieldsByIndex(fields: FieldBaseModel[]) {
   return fields.sort((a, b) => (a.index > b.index) ? 1 : -1)

@@ -1,8 +1,24 @@
 .board {
-  max-width: 70vh;
+  width: 100vh;
   margin: auto;
 
   .board-row {
     width: 100%;
+
+    &.top {
+      zulopoly-field {
+        height: 12vh;
+      }
+    }
+
+    &.bottom {
+      zulopoly-field {
+        height: 12vh;
+      }
+    }
+
+    &.middle {
+      height: 76vh;
+    }
   }
 }
