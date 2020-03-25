@@ -12,16 +12,16 @@ import {appReducer, initialState as appInitialState} from './+state/app.reducer'
 import {environment} from '../environments/environment';
 import {routerReducer, StoreRouterConnectingModule} from '@ngrx/router-store';
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
-import { SocketIoModule } from 'ngx-socket-io';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     NxModule.forRoot(),
-/*    SocketIoModule.forRoot({ url: 'http://localhost:4200', options: {} }),*/
+    /*    SocketIoModule.forRoot({ url: 'http://localhost:4200', options: {} }),*/
     StoreModule.forRoot(
       {router: routerReducer, app: appReducer}, {
         /*      runtimeChecks: {
@@ -45,8 +45,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     RouterModule,
     LayoutModule,
-    StoreRouterConnectingModule.forRoot(),
-    FlexLayoutModule
+    StoreRouterConnectingModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,17 +1,25 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SnackModule } from './snack/snack.module';
-import { DialogModule } from './dialog/dialog.module';
-import { MessageService } from 'primeng';
-import { ToastModule } from 'primeng/toast';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from "@angular/forms";
+import {FlexLayoutModule} from "@angular/flex-layout";
+import {SnackModule} from "./snack/snack.module";
+import {DialogModule} from "./dialog/dialog.module";
+
+const baseModules = [
+  CommonModule,
+  FormsModule,
+  FlexLayoutModule,
+  SnackModule,
+  DialogModule
+];
 
 @NgModule({
-  imports: [CommonModule],
-  exports: [
-    SnackModule,
-    DialogModule,
-    ToastModule
+  imports: [
+    ...baseModules
   ],
-  providers: [MessageService]
+  exports: [
+    ...baseModules
+  ],
+  providers: []
 })
 export class BaseModule {}

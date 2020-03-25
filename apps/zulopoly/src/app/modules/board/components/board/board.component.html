@@ -1,22 +1,21 @@
 <div *ngIf="boardFields$ | async as fields" class="board" fxLayout="column">
 
   <div class="top board-row" fxLayout="row">
-    <zulopoly-field *ngFor="let field of fields.top" [field]="field" fxFlex="auto"></zulopoly-field>
+    <zulopoly-field (click)="test()" *ngFor="let field of fields.top" [field]="field" fxFlex="auto"></zulopoly-field>
   </div>
 
-  <div class="middle board-row" fxLayout="row">
-    <div fxLayout="column">
+  <div class="middle board-row">
+    <div class="middle-left" fxLayout="column">
       <zulopoly-field *ngFor="let field of fields.left" [field]="field" fxFlex="auto"></zulopoly-field>
     </div>
-
     <zulopoly-field [field]="fields.center" fxFlex="auto"></zulopoly-field>
 
-    <div fxLayout="column">
+    <div class="middle-right" fxLayout="column">
       <zulopoly-field *ngFor="let field of fields.right" [field]="field" fxFlex="auto"></zulopoly-field>
     </div>
   </div>
 
-  <div class="bottom board-row" fxLayout="row">
+  <div class="bottom board-row">
     <zulopoly-field *ngFor="let field of fields.bottom" [field]="field" fxFlex="auto"></zulopoly-field>
   </div>
 

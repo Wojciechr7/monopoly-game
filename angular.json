@@ -25,7 +25,12 @@
               "apps/zulopoly/src/favicon.ico",
               "apps/zulopoly/src/assets"
             ],
-            "styles": ["apps/zulopoly/src/styles.scss"],
+            "styles": [
+              "apps/zulopoly/src/styles.scss",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/nova-light/theme.css",
+              "node_modules/primeng/resources/primeng.min.css"
+            ],
             "scripts": []
           },
           "configurations": {

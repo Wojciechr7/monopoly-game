@@ -6,19 +6,50 @@
     width: 100%;
 
     &.top {
+
       zulopoly-field {
+        box-sizing: border-box;
         height: 12vh;
+
+        &:first-child {
+          flex: none !important;
+          width: 12vh;
+        }
+
+        &:last-child {
+          width: 12vh;
+          flex: none !important;
+        }
       }
+
     }
 
     &.bottom {
       zulopoly-field {
         height: 12vh;
+
+        &:first-child {
+          flex: none !important;
+          width: 12vh;
+        }
+
+        &:last-child {
+          width: 12vh;
+          flex: none !important;
+        }
       }
     }
 
     &.middle {
       height: 76vh;
+
+      .middle-left {
+        width: 12vh;
+      }
+
+      .middle-right {
+        width: 12vh;
+      }
     }
   }
 }

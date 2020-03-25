@@ -1,5 +1,4 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
 import {BoardRoutingModule} from './board-routing.module';
 import {BoardComponent} from './components/board/board.component';
 import {FieldComponent} from './components/field/field.component';
@@ -8,7 +7,6 @@ import {EffectsModule} from '@ngrx/effects';
 import * as fromBoard from './+state/board.reducer';
 import {BoardEffects} from './+state/board.effects';
 import {BoardFacade} from './+state/board.facade';
-import {FlexLayoutModule} from "@angular/flex-layout";
 import {PropertyComponent} from './components/field/components/property/property.component';
 import {StartComponent} from './components/field/components/start/start.component';
 import {JailComponent} from './components/field/components/jail/jail.component';
@@ -21,15 +19,15 @@ import {ChanceComponent} from './components/field/components/chance/chance.compo
 import {CommunityChestComponent} from './components/field/components/community-chest/community-chest.component';
 import {CenterComponent} from './components/field/components/center/center.component';
 import {DynamicFieldDirective} from "./directives/dynamic-field.directive";
+import {BaseModule} from "@zulopoly/base";
 
 @NgModule({
   declarations: [BoardComponent, FieldComponent, PropertyComponent, StartComponent, JailComponent, GoToJailComponent, ParkingComponent, RailwaysComponent, PowerPlantWaterworksComponent, TaxComponent, ChanceComponent, CommunityChestComponent, CenterComponent, DynamicFieldDirective],
   imports: [
-    CommonModule,
+    BaseModule,
     BoardRoutingModule,
     StoreModule.forFeature(fromBoard.BOARD_FEATURE_KEY, fromBoard.reducer),
-    EffectsModule.forFeature([BoardEffects]),
-    FlexLayoutModule
+    EffectsModule.forFeature([BoardEffects])
   ],
   providers: [BoardFacade]
 })
