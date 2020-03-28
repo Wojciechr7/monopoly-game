@@ -1,6 +1,8 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store';
 import {BOARD_FEATURE_KEY, boardAdapter, BoardPartialState, State} from './board.reducer';
 import {FieldBaseModel} from "../../../../../../../libs/api-interfaces/src/lib/models/fields/field-base.model";
+import {getFieldPosition} from "../../game/helpers/get-field-position";
+import {FieldSideEnum} from "../../../../../../../libs/api-interfaces/src/lib/enums/fields/field-side.enum";
 
 // Lookup the 'Board' feature state managed by NgRx
 export const getBoardState = createFeatureSelector<BoardPartialState, State>(
@@ -12,19 +14,19 @@ const {selectAll, selectEntities} = boardAdapter.getSelectors();
 /*export const getBoardFields = createSelector(getBoardState, (state: State) => state.boardFields);*/
 
 export const getTopBoardFields = createSelector(getBoardState, (state: State) => {
-  return sortFieldsByIndex(state.boardFields.filter((field: FieldBaseModel) => field.index > 20 && field.index < 32))
+  return sortFieldsByIndex(state.boardFields.filter((field: FieldBaseModel) => getFieldPosition(field.index) === FieldSideEnum.Top))
 });
 
 export const getRightBoardFields = createSelector(getBoardState, (state: State) => {
-  return sortFieldsByIndex(state.boardFields.filter((field: FieldBaseModel) => field.index > 31))
+  return sortFieldsByIndex(state.boardFields.filter((field: FieldBaseModel) => getFieldPosition(field.index) === FieldSideEnum.Right))
 });
 
 export const getBottomBoardFields = createSelector(getBoardState, (state: State) => {
-  return sortFieldsByIndex(state.boardFields.filter((field: FieldBaseModel) => field.index > 0 && field.index < 12)).reverse()
+  return sortFieldsByIndex(state.boardFields.filter((field: FieldBaseModel) => getFieldPosition(field.index) === FieldSideEnum.Bottom)).reverse()
 });
 
 export const getLeftBoardFields = createSelector(getBoardState, (state: State) => {
-  return sortFieldsByIndex(state.boardFields.filter((field: FieldBaseModel) => field.index > 11 && field.index < 21)).reverse()
+  return sortFieldsByIndex(state.boardFields.filter((field: FieldBaseModel) => getFieldPosition(field.index) === FieldSideEnum.Left)).reverse()
 });
 
 export const getCenterField = createSelector(getBoardState, (state: State) => state.boardFields.find((field: FieldBaseModel) => {

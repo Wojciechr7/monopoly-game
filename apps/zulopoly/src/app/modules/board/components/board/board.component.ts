@@ -24,10 +24,6 @@ export class BoardComponent extends BoardBase implements OnInit {
   ngOnInit(): void {
   }
 
-  test() {
-    this.snack.success();
-  }
-
   protected loadData() {
     this.boardFields$ = this.boardFacade.boardFields$.pipe(tap(v => {
       console.log(v)

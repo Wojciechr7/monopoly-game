@@ -1,4 +1,4 @@
-export interface FieldSideEnum {
+export enum FieldSideEnum {
   Top,
   Right,
   Bottom,
