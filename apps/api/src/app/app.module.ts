@@ -4,10 +4,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ChatModule } from './modules/chat/chat.module';
+import { connectionString } from '../assets/connection';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb+srv://zul:zulopoli@hshelper-lmkdk.azure.mongodb.net/test?retryWrites=true&w=majority'),
+    MongooseModule.forRoot(connectionString),
     ChatModule,
   ],
   controllers: [AppController],
