@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="dice">
+    <ol class="dice-list even-roll" data-roll="1" id="dice-1">
+      <ng-container [ngTemplateOutlet]="diceElements"></ng-container>
+    </ol>
+    <ol class="dice-list odd-roll" data-roll="1" id="dice-2">
+      <ng-container [ngTemplateOutlet]="diceElements"></ng-container>
+    </ol>
+  </div>
+</div>
+
+<p-button (click)="rollDice()" class="roll-button" fxFlexAlign="center" label="Roll Dice"
+          styleClass="ui-button-raised"></p-button>
+
+<ng-template #diceElements>
+  <li *ngFor="let index of getDiceNumbers(6)" [attr.data-side]="index" class="dice-item">
+    <span *ngFor="let dot of getDiceNumbers(index)" class="dot"></span>
+  </li>
+</ng-template>

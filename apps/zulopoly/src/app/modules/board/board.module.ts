@@ -20,9 +20,10 @@ import {CommunityChestComponent} from './components/field/components/community-c
 import {CenterComponent} from './components/field/components/center/center.component';
 import {DynamicFieldDirective} from "./directives/dynamic-field.directive";
 import {BaseModule} from "@zulopoly/base";
+import {DiceComponent} from './components/dice/dice.component';
 
 @NgModule({
-  declarations: [BoardComponent, FieldComponent, PropertyComponent, StartComponent, JailComponent, GoToJailComponent, ParkingComponent, RailwaysComponent, PowerPlantWaterworksComponent, TaxComponent, ChanceComponent, CommunityChestComponent, CenterComponent, DynamicFieldDirective],
+  declarations: [BoardComponent, FieldComponent, PropertyComponent, StartComponent, JailComponent, GoToJailComponent, ParkingComponent, RailwaysComponent, PowerPlantWaterworksComponent, TaxComponent, ChanceComponent, CommunityChestComponent, CenterComponent, DynamicFieldDirective, DiceComponent],
   imports: [
     BaseModule,
     BoardRoutingModule,
