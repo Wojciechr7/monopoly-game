@@ -1,10 +1,11 @@
-import {Injectable} from '@angular/core';
-import {Action, select, Store} from '@ngrx/store';
+import { Injectable } from '@angular/core';
+import { select, Store } from '@ngrx/store';
 import * as fromBoard from './board.reducer';
 import * as BoardSelectors from './board.selectors';
-import {FieldBaseModel} from "../../../../../../../libs/api-interfaces/src/lib/models/fields/field-base.model";
-import {map} from "rxjs/operators";
-import {combineLatest} from "rxjs";
+import { FieldBaseModel } from "../../../../../../../libs/api-interfaces/src/lib/models/fields/field-base.model";
+import { map } from "rxjs/operators";
+import { combineLatest } from "rxjs";
+import * as BoardActions from './board.actions';
 
 @Injectable()
 export class BoardFacade {
@@ -16,21 +17,19 @@ export class BoardFacade {
     this.store.pipe(select(BoardSelectors.getCenterField)),
   ).pipe(
     map(([top, right, bottom, left, center]) => {
-      return {top, right, bottom, left, center}
+      return { top, right, bottom, left, center }
     })
   );
-  /*  boardFields$ = this.store.pipe(select(BoardSelectors.getBoardFields));*/
 
-
-  /*  allBoard$ = this.store.pipe(select(BoardSelectors.getAllBoard));
-    selectedBoard$ = this.store.pipe(select(BoardSelectors.getSelected));*/
+  dice$ = this.store.pipe(select(BoardSelectors.getDice));
 
   constructor(private store: Store<fromBoard.BoardPartialState>) {
   }
 
-  dispatch(action: Action) {
-    this.store.dispatch(action);
+  rollDice() {
+    this.store.dispatch(BoardActions.rollDice());
   }
+
 }
 
 export interface OrderedFields<T = FieldBaseModel> {

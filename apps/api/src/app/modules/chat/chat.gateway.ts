@@ -1,22 +1,35 @@
-import { SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
-import { OnGatewayDisconnect } from '@nestjs/websockets/interfaces/hooks/on-gateway-disconnect.interface';
-import { OnGatewayConnection } from '@nestjs/websockets/interfaces/hooks/on-gateway-connection.interface';
+import { SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
+import { ChatService } from './chat.service';
+import { Message } from "@zulopoly/api-interfaces";
+import { AppGateway } from "../../app.gateway";
 
 @WebSocketGateway()
-export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
+export class ChatGateway extends AppGateway {
 
-  @WebSocketServer()
-  server;
-
-  async handleConnection() {
-
+  constructor(
+    private chatService: ChatService
+  ) {
+    super();
   }
 
-  async handleDisconnect(client: any) {
+  afterInit(server: any) {
+    this.logger.log('Initialized');
   }
 
-  @SubscribeMessage('chat')
-  async onMessage(client, message) {
-    client.broadcast.emit('chat', message);
+  handleDisconnect(client: any) {
+    this.logger.log('Has disconnected');
   }
+
+  handleConnection(client: any, ...args: any[]) {
+    this.logger.log('Connected');
+    client.emit('messageToClient', this.chatService.getMessages());
+  }
+
+  @SubscribeMessage('messageToServer')
+  handleMessage(client: any, payload: Message): void {
+    this.logger.log(payload);
+    this.chatService.addMessage(payload);
+    this.wss.emit('messageToClient', this.chatService.getMessages());
+  }
+
 }

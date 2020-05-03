@@ -1,18 +1,37 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {AppComponent} from './app.component';
-import {HttpClientModule} from '@angular/common/http';
-import {StoreModule} from '@ngrx/store';
-import {RouterModule} from '@angular/router';
-import {LayoutModule} from './modules/layout/layout.module';
-import {EffectsModule} from '@ngrx/effects';
-import {AppEffects} from './+state/app.effects';
-import {NxModule} from '@nrwl/angular';
-import {appReducer, initialState as appInitialState} from './+state/app.reducer';
-import {environment} from '../environments/environment';
-import {routerReducer, StoreRouterConnectingModule} from '@ngrx/router-store';
-import {StoreDevtoolsModule} from "@ngrx/store-devtools";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { BrowserModule } from '@angular/platform-browser';
+import { Injectable, NgModule } from '@angular/core';
+import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
+import { RouterModule } from '@angular/router';
+import { LayoutModule } from './modules/layout/layout.module';
+import { EffectsModule } from '@ngrx/effects';
+import { AppEffects } from './+state/app.effects';
+import { NxModule } from '@nrwl/angular';
+import { appReducer, initialState as appInitialState } from './+state/app.reducer';
+import { environment } from '../environments/environment';
+import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { Socket, SocketIoModule } from "ngx-socket-io";
+
+@Injectable()
+export class SocketChat extends Socket {
+
+  constructor() {
+    super({ url: `${ environment.baseUrl }:3333`, options: {} });
+  }
+
+}
+
+@Injectable()
+export class SocketGame extends Socket {
+
+  constructor() {
+    super({ url: `${ environment.baseUrl }:4001`, options: {} });
+  }
+
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,9 +40,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     BrowserAnimationsModule,
     HttpClientModule,
     NxModule.forRoot(),
-    /*    SocketIoModule.forRoot({ url: 'http://localhost:4200', options: {} }),*/
     StoreModule.forRoot(
-      {router: routerReducer, app: appReducer}, {
+      { router: routerReducer, app: appReducer }, {
         /*      runtimeChecks: {
                 strictStateImmutability: true,
                 strictActionImmutability: true
@@ -45,9 +63,10 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     RouterModule,
     LayoutModule,
-    StoreRouterConnectingModule.forRoot()
+    StoreRouterConnectingModule.forRoot(),
+    SocketIoModule,
   ],
-  providers: [],
+  providers: [SocketChat, SocketGame],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

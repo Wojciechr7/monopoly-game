@@ -1,15 +1,15 @@
-import {createFeatureSelector, createSelector} from '@ngrx/store';
-import {BOARD_FEATURE_KEY, boardAdapter, BoardPartialState, State} from './board.reducer';
-import {FieldBaseModel} from "../../../../../../../libs/api-interfaces/src/lib/models/fields/field-base.model";
-import {getFieldPosition} from "../../game/helpers/get-field-position";
-import {FieldSideEnum} from "../../../../../../../libs/api-interfaces/src/lib/enums/fields/field-side.enum";
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { BOARD_FEATURE_KEY, boardAdapter, BoardPartialState, State } from './board.reducer';
+import { FieldBaseModel } from "../../../../../../../libs/api-interfaces/src/lib/models/fields/field-base.model";
+import { getFieldPosition } from "../../game/helpers/get-field-position";
+import { FieldSideEnum } from "../../../../../../../libs/api-interfaces/src/lib/enums/fields/field-side.enum";
 
 // Lookup the 'Board' feature state managed by NgRx
 export const getBoardState = createFeatureSelector<BoardPartialState, State>(
   BOARD_FEATURE_KEY
 );
 
-const {selectAll, selectEntities} = boardAdapter.getSelectors();
+const { selectAll, selectEntities } = boardAdapter.getSelectors();
 
 /*export const getBoardFields = createSelector(getBoardState, (state: State) => state.boardFields);*/
 
@@ -31,6 +31,11 @@ export const getLeftBoardFields = createSelector(getBoardState, (state: State) =
 
 export const getCenterField = createSelector(getBoardState, (state: State) => state.boardFields.find((field: FieldBaseModel) => {
   return field.index === 0;
+}));
+
+export const getDice = createSelector(getBoardState, (state: State) => ({
+  left: state.leftDiceRoll,
+  right: state.rightDiceRoll
 }));
 
 export function sortFieldsByIndex(fields: FieldBaseModel[]) {

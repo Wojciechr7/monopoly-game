@@ -1,13 +1,25 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { BoardBase } from "../board-base/board-base";
+import { BoardFacade } from "../../+state/board.facade";
+import { DiceStateModel } from "../../models/dice-state.model";
+import { Observable } from "rxjs";
+import { tap } from "rxjs/operators";
 
 @Component({
   selector: 'zulopoly-dice',
   templateUrl: './dice.component.html',
   styleUrls: ['./dice.component.scss']
 })
-export class DiceComponent implements OnInit {
+export class DiceComponent extends BoardBase implements OnInit {
 
-  constructor() {
+  @ViewChildren("diceList") diceList: QueryList<ElementRef>;
+
+  diceState$: Observable<DiceStateModel>;
+
+  constructor(
+    protected boardFacade: BoardFacade,
+  ) {
+    super(boardFacade);
   }
 
   ngOnInit(): void {
@@ -19,23 +31,22 @@ export class DiceComponent implements OnInit {
   }
 
   rollDice() {
-    // @ts-ignore
-    const dice = [...document.querySelectorAll(".dice-list")];
-    dice.forEach(d => {
-      this.toggleClasses(d);
-      d.dataset.roll = this.getRandomNumber(1, 6);
+    this.boardFacade.rollDice();
+  }
+
+  protected loadData() {
+
+
+    this.diceState$ = this.boardFacade.dice$.pipe(tap(() => this.toggleClasses()));
+  }
+
+  private toggleClasses() {
+    const dice: HTMLElement[] = this.diceList?.map((el: ElementRef) => el.nativeElement);
+
+    dice?.forEach(d => {
+      d.classList.toggle("odd-roll");
+      d.classList.toggle("even-roll");
     });
-  }
-
-  private toggleClasses(dice) {
-    dice.classList.toggle("odd-roll");
-    dice.classList.toggle("even-roll");
-  }
-
-  private getRandomNumber(min: number, max: number) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
 }

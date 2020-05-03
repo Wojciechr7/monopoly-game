@@ -1,14 +1,15 @@
-import {Injectable} from '@angular/core';
-import {Actions, createEffect, Effect, ofType} from '@ngrx/effects';
-import {DataPersistence} from '@nrwl/angular';
-import {BoardPartialState} from './board.reducer';
+import { Injectable } from '@angular/core';
+import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
+import { DataPersistence } from '@nrwl/angular';
+import { BoardPartialState, initialState } from './board.reducer';
 import * as BoardActions from './board.actions';
-import {BoardComponent} from "../components/board/board.component";
-import {catchError, map, switchMap} from "rxjs/operators";
-import {ActivatedRouteSnapshot} from "@angular/router";
-import {of} from "rxjs";
-import {BoardService} from "../services/board.service";
-import {FieldsLoadedModel} from "../../../../../../../libs/api-interfaces/src/lib/models/fields-loaded.model";
+import { BoardComponent } from "../components/board/board.component";
+import { catchError, map, switchMap } from "rxjs/operators";
+import { ActivatedRouteSnapshot } from "@angular/router";
+import { of } from "rxjs";
+import { BoardService } from "../services/board.service";
+import { FieldsLoadedModel } from "../../../../../../../libs/api-interfaces/src/lib/models/fields-loaded.model";
+import { GameStateModel } from "../../../../../../../libs/api-interfaces/src/lib/models/game-state.model";
 
 @Injectable()
 export class BoardEffects {
@@ -19,7 +20,9 @@ export class BoardEffects {
         switchMap(() => {
           return [
             BoardActions.BoardComponentLoaded(),
-            BoardActions.loadFields()
+            BoardActions.loadFields(),
+            BoardActions.loadGame(),
+            BoardActions.createGame()
           ]
         })
       )
@@ -32,10 +35,39 @@ export class BoardEffects {
   loadFields$ = createEffect(() => this.actions$.pipe(
     ofType(BoardActions.loadFields),
     switchMap(() => this.boardService.getBoardFields().pipe(
-      map((fields: FieldsLoadedModel) => BoardActions.loadFieldsSuccess({fields})),
-      catchError(error => of(BoardActions.loadFieldsFailure({error})))
+      map((fields: FieldsLoadedModel) => BoardActions.loadFieldsSuccess({ fields })),
+      catchError(error => of(BoardActions.loadFieldsFailure({ error })))
       )
     ))
+  );
+
+  loadGame$ = createEffect(() => this.actions$.pipe(
+    ofType(BoardActions.loadGame),
+    switchMap(() => this.boardService.getGameState().pipe(
+      map((response: GameStateModel) => {
+        console.log(response)
+        return BoardActions.loadGameSuccess({ game: response })
+      })
+      )
+    ))
+  );
+
+  createGame$ = createEffect(() => this.actions$.pipe(
+    ofType(BoardActions.createGame),
+    map(() => {
+      this.boardService.createGame(initialState.playerName);
+      return BoardActions.createGameSuccess()
+    })
+    )
+  );
+
+  rollDice$ = createEffect(() => this.actions$.pipe(
+    ofType(BoardActions.rollDice),
+    map(() => {
+      this.boardService.rollDice();
+      return BoardActions.rollDiceSuccess()
+    })
+    )
   );
 
 

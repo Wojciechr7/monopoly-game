@@ -1,23 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Socket } from 'ngx-socket-io';
+import { Observable } from "rxjs";
+import { Message } from "@zulopoly/api-interfaces";
+import { SocketChat } from "../../../app.module";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
 
-  constructor(
-    private socket: Socket
-  ) { }
-  sendMessage (message: string) {
-    this.socket.emit('chat', message)
+  constructor(private socket: SocketChat) {
   }
 
-  receiveMessage() {
-    return this.socket.fromEvent('chat')
+  addMessage(message: Message): void {
+    this.socket.emit('messageToServer', message);
   }
 
-  addChat(message) {
-
+  getMessages(): Observable<Message[]> {
+    return this.socket.fromEvent<Message[]>('messageToClient');
   }
+
 }
