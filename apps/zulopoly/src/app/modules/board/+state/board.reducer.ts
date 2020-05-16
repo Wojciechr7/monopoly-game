@@ -5,16 +5,15 @@ import { BoardEntity } from './board.models';
 import { BOARD_SIZE } from "../../game/helpers/game-settings";
 import { FieldBaseModel } from "../../../../../../../libs/api-interfaces/src/lib/models/fields/field-base.model";
 import { GameStateModel } from "../../../../../../../libs/api-interfaces/src/lib/models/game-state.model";
+import { DiceRolledModel } from "../../../../../../../libs/api-interfaces/src/lib/models/dice-rolled.model";
 
 export const BOARD_FEATURE_KEY = 'board';
 
 export interface State extends EntityState<BoardEntity> {
   boardSize: number;
   boardFields: FieldBaseModel[];
-  leftDiceRoll: number;
-  rightDiceRoll: number;
+  diceRoll: DiceRolledModel;
   gameState: GameStateModel;
-  playerName: string;
 }
 
 export interface BoardPartialState {
@@ -26,20 +25,17 @@ export const boardAdapter: EntityAdapter<BoardEntity> = createEntityAdapter<Boar
 export const initialState: State = boardAdapter.getInitialState({
   boardSize: BOARD_SIZE,
   boardFields: [],
-  leftDiceRoll: 1,
-  rightDiceRoll: 1,
-  gameState: null,
-  playerName: 'test'
+  diceRoll: null,
+  gameState: null
 });
 
 const boardReducer = createReducer(
   initialState,
-  on(BoardActions.BoardComponentLoaded, state => {
+  on(BoardActions.BoardComponentLoaded, (state: State) => {
       return {
         ...state,
         boardFields: [],
-        leftDiceRoll: 1,
-        rightDiceRoll: 1,
+        diceRoll: null,
         gameState: null,
         playerName: 'test'
       }
@@ -56,6 +52,21 @@ const boardReducer = createReducer(
       return {
         ...state,
         gameState: game
+      }
+    }
+  ),
+  on(BoardActions.leaveGameSuccess, (state) => {
+      return {
+        ...state,
+        gameState: null
+      }
+    }
+  ),
+  on(BoardActions.loadDiceRolledSuccess, (state, { dice }) => {
+      return {
+        ...state,
+        leftDiceRoll: dice.leftDice,
+        rightDiceRoll: dice.rightDice
       }
     }
   )

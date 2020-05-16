@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/angular';
-import { BoardPartialState, initialState } from './board.reducer';
+import { BoardPartialState } from './board.reducer';
 import * as BoardActions from './board.actions';
 import { BoardComponent } from "../components/board/board.component";
 import { catchError, map, switchMap } from "rxjs/operators";
@@ -10,6 +10,7 @@ import { of } from "rxjs";
 import { BoardService } from "../services/board.service";
 import { FieldsLoadedModel } from "../../../../../../../libs/api-interfaces/src/lib/models/fields-loaded.model";
 import { GameStateModel } from "../../../../../../../libs/api-interfaces/src/lib/models/game-state.model";
+import { DiceRolledModel } from "../../../../../../../libs/api-interfaces/src/lib/models/dice-rolled.model";
 
 @Injectable()
 export class BoardEffects {
@@ -22,13 +23,10 @@ export class BoardEffects {
             BoardActions.BoardComponentLoaded(),
             BoardActions.loadFields(),
             BoardActions.loadGame(),
-            BoardActions.createGame()
+            BoardActions.loadDiceRolled()
           ]
         })
       )
-    },
-    onError: (a: ActivatedRouteSnapshot, e: any) => {
-      return null;
     }
   });
 
@@ -52,15 +50,6 @@ export class BoardEffects {
     ))
   );
 
-  createGame$ = createEffect(() => this.actions$.pipe(
-    ofType(BoardActions.createGame),
-    map(() => {
-      this.boardService.createGame(initialState.playerName);
-      return BoardActions.createGameSuccess()
-    })
-    )
-  );
-
   rollDice$ = createEffect(() => this.actions$.pipe(
     ofType(BoardActions.rollDice),
     map(() => {
@@ -70,43 +59,25 @@ export class BoardEffects {
     )
   );
 
+  leaveGame$ = createEffect(() => this.actions$.pipe(
+    ofType(BoardActions.leaveGame),
+    map(() => {
+      this.boardService.leaveGame();
+      return BoardActions.leaveGameSuccess();
+    })
+    )
+  );
 
-  /*  loadFields$ = createEffect(() =>
-      this.actions$.pipe(
-        ofType(BoardActions.loadFields),
-        fetch({
-          run: action => {
-            return this.boardService.getBoardFields().pipe(
-              map((fields: FieldsLoadedModel) => {
-                return BoardActions.loadFieldsSuccess({fields})
-              })
-            )
-          },
-
-          onError: (action, error) => {
-            console.error('Error', error);
-            return BoardActions.loadFieldsFailure({error});
-          }
-        })
+  loadDiceRolled$ = createEffect(() => this.actions$.pipe(
+    ofType(BoardActions.loadDiceRolled),
+    switchMap(() => this.boardService.getDiceRolled().pipe(
+      map((response: DiceRolledModel) => {
+        console.log(response)
+        return BoardActions.loadDiceRolledSuccess({ dice: response })
+      })
       )
-    );*/
-
-  /*  loadBoard$ = createEffect(() =>
-      this.actions$.pipe(
-        ofType(BoardActions.loadBoard),
-        fetch({
-          run: action => {
-            // Your custom service 'load' logic goes here. For now just return a success action...
-            return BoardActions.loadBoardSuccess({board: []});
-          },
-
-          onError: (action, error) => {
-            console.error('Error', error);
-            return BoardActions.loadBoardFailure({error});
-          }
-        })
-      )
-    );*/
+    ))
+  );
 
   constructor(
     private actions$: Actions,

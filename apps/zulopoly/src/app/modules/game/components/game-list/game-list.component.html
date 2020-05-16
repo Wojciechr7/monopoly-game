@@ -1,0 +1,13 @@
+<input #playerName type="text" value="test">
+<button (click)="backToGame(playerName.value)">back to game</button>
+<button (click)="createGame(playerName.value)">create game</button>
+<button (click)="startGame()">start game</button>
+
+<ul>
+  <li *ngFor="let game of games$ | async">started: {{game.gameStarted}},
+    players: <span *ngFor="let player of game.players"
+                   [style.color]="player.isConnected ? 'black' : 'red'">{{player.name}}
+      <button (click)="removePlayer(player.id)">x</button>, </span>
+    <button (click)="joinToGame(game.id, playerName.value)">join</button>
+  </li>
+</ul>

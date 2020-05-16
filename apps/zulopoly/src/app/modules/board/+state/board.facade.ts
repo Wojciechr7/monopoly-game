@@ -22,12 +22,17 @@ export class BoardFacade {
   );
 
   dice$ = this.store.pipe(select(BoardSelectors.getDice));
+  gameState$ = this.store.pipe(select(BoardSelectors.getGameState));
 
   constructor(private store: Store<fromBoard.BoardPartialState>) {
   }
 
   rollDice() {
     this.store.dispatch(BoardActions.rollDice());
+  }
+
+  leaveGame() {
+    this.store.dispatch(BoardActions.leaveGame());
   }
 
 }

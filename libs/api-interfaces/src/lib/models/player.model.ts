@@ -3,4 +3,5 @@ export interface PlayerModel {
   name: string;
   position: number;
   isConnected: boolean;
+  isGameMaster: boolean;
 }

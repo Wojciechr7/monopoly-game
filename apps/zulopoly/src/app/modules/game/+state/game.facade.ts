@@ -1,20 +1,38 @@
-import {Injectable} from '@angular/core';
-
-import {Action, select, Store} from '@ngrx/store';
-
+import { Injectable } from '@angular/core';
+import { select, Store } from '@ngrx/store';
 import * as fromGame from './game.reducer';
 import * as GameSelectors from './game.selectors';
+import * as GameActions from './game.actions';
 
 @Injectable()
 export class GameFacade {
-  loaded$ = this.store.pipe(select(GameSelectors.getGameLoaded));
-  allGame$ = this.store.pipe(select(GameSelectors.getAllGame));
-  selectedGame$ = this.store.pipe(select(GameSelectors.getSelected));
+  allGames$ = this.store.pipe(select(GameSelectors.getGameList));
 
   constructor(private store: Store<fromGame.GamePartialState>) {
   }
 
-  dispatch(action: Action) {
-    this.store.dispatch(action);
+  createGame(playerName: string) {
+    this.store.dispatch(GameActions.createGame({ playerName }));
   }
+
+  joinToGame(gameId: string, playerName: string) {
+    this.store.dispatch(GameActions.joinToGame({ gameId, playerName }));
+  }
+
+  backToGame(playerName: string) {
+    this.store.dispatch(GameActions.backToGame({ playerName }));
+  }
+
+  startGame() {
+    this.store.dispatch(GameActions.startGame());
+  }
+
+  removePlayer(playerId: string) {
+    this.store.dispatch(GameActions.removePlayer({ playerId }));
+  }
+
+  /*  getGameList() {
+      this.store.dispatch(GameActions.loadGameList());
+    }*/
+
 }

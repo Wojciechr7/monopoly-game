@@ -1,27 +1,35 @@
-<div *ngIf="boardFields$ | async as fields" class="board" fxLayout="column">
+<div *ngIf="boardFields$ | async as fields">
+  <div *ngIf="gameState$ | async as game">
 
-  <div class="board-row board-row--horizontal" fxLayout="row">
-    <zulopoly-field *ngFor="let field of fields.top" [field]="field"
-                    class="board-field__zulopoly-field"></zulopoly-field>
-  </div>
+    <button (click)="leaveGame()">leave game</button>
 
-  <div class="board-row board-row--vertical" fxLayout="row">
-    <div class="board-column--middle-left" fxLayout="column">
-      <zulopoly-field *ngFor="let field of fields.left" [field]="field" class="board-field__zulopoly-field"
-                      fxFlex="auto"></zulopoly-field>
+    <div *ngIf="game.gameStarted" class="board" fxLayout="column">
+
+      <div class="board-row board-row--horizontal" fxLayout="row">
+        <zulopoly-field *ngFor="let field of fields.top" [field]="field"
+                        class="board-field__zulopoly-field"></zulopoly-field>
+      </div>
+
+      <div class="board-row board-row--vertical" fxLayout="row">
+        <div class="board-column--middle-left" fxLayout="column">
+          <zulopoly-field *ngFor="let field of fields.left" [field]="field" class="board-field__zulopoly-field"
+                          fxFlex="auto"></zulopoly-field>
+        </div>
+
+        <zulopoly-field [field]="fields.center" class="board-field__zulopoly-field" fxFlex="auto"></zulopoly-field>
+
+        <div class="board-column--middle-right" fxLayout="column">
+          <zulopoly-field *ngFor="let field of fields.right" [field]="field" class="board-field__zulopoly-field"
+                          fxFlex="auto"></zulopoly-field>
+        </div>
+      </div>
+
+      <div class="board-row board-row--horizontal" fxLayout="row">
+        <zulopoly-field *ngFor="let field of fields.bottom" [field]="field"
+                        class="board-field__zulopoly-field"></zulopoly-field>
+      </div>
+
     </div>
 
-    <zulopoly-field [field]="fields.center" class="board-field__zulopoly-field" fxFlex="auto"></zulopoly-field>
-
-    <div class="board-column--middle-right" fxLayout="column">
-      <zulopoly-field *ngFor="let field of fields.right" [field]="field" class="board-field__zulopoly-field"
-                      fxFlex="auto"></zulopoly-field>
-    </div>
   </div>
-
-  <div class="board-row board-row--horizontal" fxLayout="row">
-    <zulopoly-field *ngFor="let field of fields.bottom" [field]="field"
-                    class="board-field__zulopoly-field"></zulopoly-field>
-  </div>
-
 </div>

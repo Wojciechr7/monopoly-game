@@ -8,9 +8,10 @@ import { GameEffects } from './+state/game.effects';
 import { GameFacade } from './+state/game.facade';
 import { ChatComponent } from './components/chat/chat.component';
 import { BaseModule } from '@zulopoly/base';
+import { GameListComponent } from './components/game-list/game-list.component';
 
 @NgModule({
-  declarations: [GameComponent, ChatComponent],
+  declarations: [GameComponent, ChatComponent, GameListComponent],
   imports: [
     GameRoutingModule,
     StoreModule.forFeature(fromGame.GAME_FEATURE_KEY, fromGame.reducer),

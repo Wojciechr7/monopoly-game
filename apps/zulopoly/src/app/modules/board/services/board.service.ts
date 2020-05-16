@@ -5,6 +5,11 @@ import { FieldsLoadedModel } from "../../../../../../../libs/api-interfaces/src/
 import { TEMP_FIELDS } from "../../game/helpers/game-settings";
 import { SocketGame } from "../../../app.module";
 import { GameStateModel } from "../../../../../../../libs/api-interfaces/src/lib/models/game-state.model";
+import {
+  GameServerEmitActions,
+  GameServerListenActions
+} from "../../../../../../../libs/base/src/lib/helpers/socket-game-actions";
+import { DiceRolledModel } from "../../../../../../../libs/api-interfaces/src/lib/models/dice-rolled.model";
 
 @Injectable({
   providedIn: 'root'
@@ -22,15 +27,19 @@ export class BoardService {
   }
 
   getGameState(): Observable<GameStateModel> {
-    return this.socket.fromEvent<GameStateModel>('getGameState');
+    return this.socket.fromEvent<GameStateModel>(GameServerEmitActions.GetGameState);
   }
 
   rollDice() {
-    return this.socket.emit('rollDice', { gameIndex: 2 });
+    return this.socket.emit(GameServerListenActions.RollDice);
   }
 
-  createGame(playerName: string) {
-    return this.socket.emit('createGame', { playerName });
+  leaveGame() {
+    return this.socket.emit(GameServerListenActions.LeaveGame);
+  }
+
+  getDiceRolled(): Observable<DiceRolledModel> {
+    return this.socket.fromEvent<DiceRolledModel>(GameServerEmitActions.DiceRolled);
   }
 
 }

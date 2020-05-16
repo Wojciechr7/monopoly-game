@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { FieldsLoadedModel } from "../../../../../../../libs/api-interfaces/src/lib/models/fields-loaded.model";
 import { GameStateModel } from "../../../../../../../libs/api-interfaces/src/lib/models/game-state.model";
+import { DiceRolledModel } from "../../../../../../../libs/api-interfaces/src/lib/models/dice-rolled.model";
 
 export const BoardComponentLoaded = createAction('[Board] Board Component Loaded');
 
@@ -32,7 +33,14 @@ export const loadGameSuccess = createAction(
   props<{ game: GameStateModel }>()
 );
 
-export const createGame = createAction('[Board] Create Game');
+export const leaveGame = createAction('[Game] Leave Game');
 
-export const createGameSuccess = createAction('[Board] Create Game Success');
+export const leaveGameSuccess = createAction('[Game] Leave Game Success');
+
+export const loadDiceRolled = createAction('[Board] Load Dice Rolled');
+
+export const loadDiceRolledSuccess = createAction(
+  '[Board] Load Dice Rolled Success',
+  props<{ dice: DiceRolledModel }>()
+);
 

@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { BoardBase } from "../board-base/board-base";
 import { BoardFacade } from "../../+state/board.facade";
-import { DiceStateModel } from "../../models/dice-state.model";
 import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
+import { DiceRolledModel } from "../../../../../../../../libs/api-interfaces/src/lib/models/dice-rolled.model";
 
 @Component({
   selector: 'zulopoly-dice',
@@ -14,7 +14,7 @@ export class DiceComponent extends BoardBase implements OnInit {
 
   @ViewChildren("diceList") diceList: QueryList<ElementRef>;
 
-  diceState$: Observable<DiceStateModel>;
+  diceState$: Observable<DiceRolledModel>;
 
   constructor(
     protected boardFacade: BoardFacade,
@@ -35,8 +35,6 @@ export class DiceComponent extends BoardBase implements OnInit {
   }
 
   protected loadData() {
-
-
     this.diceState$ = this.boardFacade.dice$.pipe(tap(() => this.toggleClasses()));
   }
 

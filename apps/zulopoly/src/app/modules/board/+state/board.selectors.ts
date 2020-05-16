@@ -4,14 +4,9 @@ import { FieldBaseModel } from "../../../../../../../libs/api-interfaces/src/lib
 import { getFieldPosition } from "../../game/helpers/get-field-position";
 import { FieldSideEnum } from "../../../../../../../libs/api-interfaces/src/lib/enums/fields/field-side.enum";
 
-// Lookup the 'Board' feature state managed by NgRx
-export const getBoardState = createFeatureSelector<BoardPartialState, State>(
-  BOARD_FEATURE_KEY
-);
+export const getBoardState = createFeatureSelector<BoardPartialState, State>(BOARD_FEATURE_KEY);
 
 const { selectAll, selectEntities } = boardAdapter.getSelectors();
-
-/*export const getBoardFields = createSelector(getBoardState, (state: State) => state.boardFields);*/
 
 export const getTopBoardFields = createSelector(getBoardState, (state: State) => {
   return sortFieldsByIndex(state.boardFields.filter((field: FieldBaseModel) => getFieldPosition(field.index) === FieldSideEnum.Top))
@@ -33,42 +28,10 @@ export const getCenterField = createSelector(getBoardState, (state: State) => st
   return field.index === 0;
 }));
 
-export const getDice = createSelector(getBoardState, (state: State) => ({
-  left: state.leftDiceRoll,
-  right: state.rightDiceRoll
-}));
+export const getDice = createSelector(getBoardState, (state: State) => state.diceRoll);
+
+export const getGameState = createSelector(getBoardState, (state: State) => state.gameState);
 
 export function sortFieldsByIndex(fields: FieldBaseModel[]) {
   return fields.sort((a, b) => (a.index > b.index) ? 1 : -1)
 }
-
-/*export const getBoardLoaded = createSelector(
-  getBoardState,
-  (state: State) => state.loaded
-);
-
-export const getBoardError = createSelector(
-  getBoardState,
-  (state: State) => state.error
-);
-
-export const getAllBoard = createSelector(
-  getBoardState,
-  (state: State) => selectAll(state)
-);
-
-export const getBoardEntities = createSelector(
-  getBoardState,
-  (state: State) => selectEntities(state)
-);
-
-export const getSelectedId = createSelector(
-  getBoardState,
-  (state: State) => state.selectedId
-);
-
-export const getSelected = createSelector(
-  getBoardEntities,
-  getSelectedId,
-  (entities, selectedId) => selectedId && entities[selectedId]
-);*/

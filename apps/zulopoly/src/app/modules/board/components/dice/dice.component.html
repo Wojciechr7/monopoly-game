@@ -2,10 +2,10 @@
 
   <div class="container">
     <div class="dice">
-      <ol #diceList [attr.data-roll]="diceState.left" class="dice-list even-roll" id="dice-1">
+      <ol #diceList [attr.data-roll]="diceState.leftDice" class="dice-list even-roll" id="dice-1">
         <ng-container [ngTemplateOutlet]="diceElements"></ng-container>
       </ol>
-      <ol #diceList [attr.data-roll]="diceState.right" class="dice-list odd-roll" id="dice-2">
+      <ol #diceList [attr.data-roll]="diceState.rightDice" class="dice-list odd-roll" id="dice-2">
         <ng-container [ngTemplateOutlet]="diceElements"></ng-container>
       </ol>
     </div>
