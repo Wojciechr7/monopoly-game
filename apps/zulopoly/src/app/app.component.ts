@@ -1,5 +1,4 @@
-import {Component} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'zulopoly-root',
@@ -8,6 +7,6 @@ import {HttpClient} from '@angular/common/http';
 })
 export class AppComponent {
 
-  constructor(private http: HttpClient) {
+  constructor() {
   }
 }

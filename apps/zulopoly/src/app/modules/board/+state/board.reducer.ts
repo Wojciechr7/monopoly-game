@@ -51,7 +51,12 @@ const boardReducer = createReducer(
   on(BoardActions.loadGameSuccess, (state, { game }) => {
       return {
         ...state,
-        gameState: game
+        gameState: game,
+        diceRoll: {
+          leftDice: game.leftDice,
+          rightDice: game.rightDice,
+          playerId: game.currentPlayer
+        }
       }
     }
   ),

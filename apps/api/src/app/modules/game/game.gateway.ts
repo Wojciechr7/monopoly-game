@@ -28,23 +28,27 @@ export class GameGateway extends AppGateway {
   }
 
   handleConnection(client: Socket, ...args: any[]) {
+/*    const game = this.gameService.getGameByKey('tesat');
+    if (game.players.length === 2) {
+      game.players = [];
+    }
+
     this.gameService.addTestAccounts(client.id);
 
     client.join('tesat');
-
-    const game = this.gameService.getGameByKey('tesat');
 
     if (game.players.length === 2) {
       this.gameService.startGame('tesat');
     }
 
     client.to('tesat').emit(GameServerEmitActions.GetGameState, game);
-    client.emit(GameServerEmitActions.GetGameState, game);
+    client.emit(GameServerEmitActions.GetGameState, game);*/
 
 
     //TODO probably issue, maybe caused by lazy loaded game module
     setTimeout(() => {
       client.emit(GameServerEmitActions.GetGameList, this.gameService.Games);
+      client.emit(GameServerEmitActions.GetClientId, client.id);
     }, 1000);
   }
 
@@ -144,6 +148,7 @@ export class GameGateway extends AppGateway {
 
   @SubscribeMessage(GameServerListenActions.RollDice)
   rollDice(client: Socket) {
+
     const gameId = this.gameService.findGameIdByPlayerId(client.id);
     const game = this.gameService.getGameByKey(gameId);
 
@@ -163,7 +168,7 @@ export class GameGateway extends AppGateway {
       return client.emit(GameServerEmitActions.Error, 'Dice already rolled');
     }
 
-    const { leftDice, rightDice } = this.gameService.rollDice(client.id);
+    const { leftDice, rightDice } = this.gameService.rollDice(gameId);
 
     client.to(gameId).emit(GameServerEmitActions.GetGameState, game);
     client.to(gameId).emit(GameServerEmitActions.DiceRolled, { leftDice, rightDice });

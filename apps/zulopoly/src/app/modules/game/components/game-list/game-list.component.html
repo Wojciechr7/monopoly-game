@@ -1,4 +1,5 @@
-<input #playerName type="text" value="test">
+<input #playerName [value]="nameTemp" type="text">
+
 <button (click)="backToGame(playerName.value)">back to game</button>
 <button (click)="createGame(playerName.value)">create game</button>
 <button (click)="startGame()">start game</button>

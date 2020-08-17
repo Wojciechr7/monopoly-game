@@ -41,3 +41,10 @@ export const removePlayer = createAction(
   '[Game] Remove Player',
   props<{ playerId: string }>()
 );
+
+export const loadClientId = createAction('[Game] Load Client Id');
+
+export const loadClientIdSuccess = createAction(
+  '[Game] Load Client Id Success',
+  props<{ clientId: string }>()
+);

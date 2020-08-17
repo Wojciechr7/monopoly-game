@@ -7,19 +7,21 @@ import { v4 as uuid } from 'uuid';
 @Injectable()
 export class GameService {
 
-  private games: Map<string, GameStateModel> = new Map<string, GameStateModel>().set(
-    'tesat', {
-      gameStarted: false,
-      availablePropertyCards: undefined,
-      chanceCards: [],
-      communityChestCards: [],
-      currentPlayer: null,
-      leftDice: 1,
-      players: [],
-      rightDice: 3,
-      diceRolled: false
-    }
-  )
+  private games: Map<string, GameStateModel> = new Map<string, GameStateModel>();
+
+  /*    .set(
+      'tesat', {
+        gameStarted: false,
+        availablePropertyCards: undefined,
+        chanceCards: [],
+        communityChestCards: [],
+        currentPlayer: null,
+        leftDice: 1,
+        players: [],
+        rightDice: 3,
+        diceRolled: false
+      }
+    )*/
 
   get Games(): GameStateModel[] {
     return [...this.games.entries()].map(([id, game]) => ({ ...game, id }));
@@ -34,6 +36,7 @@ export class GameService {
         name: "game master",
         position: 0
       });
+      return;
     }
 
     if (this.games.get('tesat').players.length === 1) {
@@ -76,6 +79,7 @@ export class GameService {
   }
 
   rollDice(gameId): { leftDice: number, rightDice: number } {
+
     const leftDice = getRandomNumber(1, 6);
     const rightDice = getRandomNumber(1, 6);
 

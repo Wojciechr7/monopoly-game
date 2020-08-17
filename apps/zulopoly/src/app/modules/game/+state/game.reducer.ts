@@ -6,7 +6,7 @@ import { GameStateModel } from "../../../../../../../libs/api-interfaces/src/lib
 export const GAME_FEATURE_KEY = 'game';
 
 export interface State extends EntityState<GameStateModel> {
-
+  clientId?: string;
 }
 
 export interface GamePartialState {
@@ -21,6 +21,10 @@ const gameReducer = createReducer(
   initialState,
   on(GameActions.loadGameListSuccess, (state, { games }) => {
       return gameAdapter.addAll(games, state)
+    }
+  ),
+  on(GameActions.loadClientIdSuccess, (state, { clientId }) => {
+      return { ...state, clientId }
     }
   )
 );

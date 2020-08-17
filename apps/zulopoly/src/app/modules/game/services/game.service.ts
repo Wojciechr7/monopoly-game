@@ -45,4 +45,8 @@ export class GameService {
     return this.socket.emit(GameServerListenActions.RemovePlayer, { playerId });
   }
 
+  getClientId(): Observable<string> {
+    return this.socket.fromEvent<string>(GameServerEmitActions.GetClientId);
+  }
+
 }

@@ -6,6 +6,7 @@ import * as GameActions from './game.actions';
 
 @Injectable()
 export class GameFacade {
+
   allGames$ = this.store.pipe(select(GameSelectors.getGameList));
 
   constructor(private store: Store<fromGame.GamePartialState>) {
@@ -30,9 +31,5 @@ export class GameFacade {
   removePlayer(playerId: string) {
     this.store.dispatch(GameActions.removePlayer({ playerId }));
   }
-
-  /*  getGameList() {
-      this.store.dispatch(GameActions.loadGameList());
-    }*/
 
 }

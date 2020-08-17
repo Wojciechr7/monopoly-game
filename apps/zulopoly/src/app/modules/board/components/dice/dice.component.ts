@@ -23,7 +23,6 @@ export class DiceComponent extends BoardBase implements OnInit {
   }
 
   ngOnInit(): void {
-
   }
 
   getDiceNumbers(number: number) {
@@ -35,7 +34,7 @@ export class DiceComponent extends BoardBase implements OnInit {
   }
 
   protected loadData() {
-    this.diceState$ = this.boardFacade.dice$.pipe(tap(() => this.toggleClasses()));
+    this.diceState$ = this.boardFacade.dice$.pipe(tap((v) => this.toggleClasses()));
   }
 
   private toggleClasses() {

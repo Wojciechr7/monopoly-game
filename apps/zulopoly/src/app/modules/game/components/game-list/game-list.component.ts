@@ -11,6 +11,7 @@ import { GameStateModel } from "../../../../../../../../libs/api-interfaces/src/
 export class GameListComponent implements OnInit {
 
   games$: Observable<GameStateModel[]>;
+  nameTemp;
 
   constructor(
     private gameFacade: GameFacade
@@ -19,6 +20,15 @@ export class GameListComponent implements OnInit {
 
   ngOnInit(): void {
     this.games$ = this.gameFacade.allGames$;
+
+    // @ts-ignore
+    const isIE = /*@cc_on!@*/false || !!document.documentMode;
+    const isEdge = !isIE && !!window.StyleMedia;
+    if (isEdge) {
+      this.nameTemp = 'player edge';
+    } else {
+      this.nameTemp = 'chrome';
+    }
   }
 
   createGame(playerName: string) {

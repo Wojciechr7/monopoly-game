@@ -19,6 +19,7 @@ export class GameEffects {
         switchMap(() => {
           return [
             GameActions.loadGameList(),
+            GameActions.loadClientId(),
             GameActions.loadGameErrors()
           ]
         })
@@ -91,6 +92,16 @@ export class GameEffects {
     })
     ),
     { dispatch: false }
+  );
+
+  loadClientId$ = createEffect(() => this.actions$.pipe(
+    ofType(GameActions.loadClientId),
+    switchMap(() => this.gameService.getClientId().pipe(
+      map((response: string) => {
+        return GameActions.loadClientIdSuccess({ clientId: response });
+      })
+      )
+    ))
   );
 
   constructor(

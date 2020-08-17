@@ -3,7 +3,8 @@ export const GameServerEmitActions = {
   GetGameList: 'Get Game List',
   Error: 'Error',
   GetGameState: 'Get Game State',
-  DiceRolled: 'Dice Rolled'
+  DiceRolled: 'Dice Rolled',
+  GetClientId: 'Get Client Id'
 }
 
 export const GameServerListenActions = {

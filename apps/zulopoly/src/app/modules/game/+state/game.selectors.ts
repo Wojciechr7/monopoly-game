@@ -6,3 +6,5 @@ const { selectAll, selectEntities } = gameAdapter.getSelectors();
 export const getGameState = createFeatureSelector<GamePartialState, State>(GAME_FEATURE_KEY);
 
 export const getGameList = createSelector(getGameState, (state: State) => selectAll(state));
+
+export const getClientId = createSelector(getGameState, (state: State) => state.clientId);
