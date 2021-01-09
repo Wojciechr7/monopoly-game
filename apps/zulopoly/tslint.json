@@ -1,7 +1,23 @@
 {
   "extends": "../../tslint.json",
   "rules": {
-    "directive-selector": [true, "attribute", "zulopoly", "camelCase"],
-    "component-selector": [true, "element", "zulopoly", "kebab-case"]
+    "directive-selector": [
+      true,
+      "attribute",
+      "zulopoly",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "zulopoly",
+      "kebab-case"
+    ],
+    "no-restricted-imports": [
+      true,
+      "element",
+      "zulopoly",
+      "kebab-case"
+    ]
   }
 }

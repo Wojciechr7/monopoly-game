@@ -1,54 +1,35 @@
+$boardSize: 90vh;
+
 .board {
-  width: 100vh;
+  width: $boardSize;
+  max-width: 100vw;
   margin: auto;
+  height: $boardSize;
+  max-height: 100vw;
+  border: calc(#{$boardSize} / 100) solid black;
+  font-family: "Arial Black", Gadget, sans-serif;
 
   .board-row {
     width: 100%;
+    height: 13%;
 
-    &.top {
-
-      zulopoly-field {
-        box-sizing: border-box;
-        height: 12vh;
-
-        &:first-child {
-          flex: none !important;
-          width: 12vh;
-        }
-
-        &:last-child {
-          width: 12vh;
-          flex: none !important;
-        }
+    &.board-row--horizontal {
+      .board-field__zulopoly-field {
+        flex: none;
+        width: calc(74% / 9);
       }
 
-    }
-
-    &.bottom {
-      zulopoly-field {
-        height: 12vh;
-
-        &:first-child {
-          flex: none !important;
-          width: 12vh;
-        }
-
-        &:last-child {
-          width: 12vh;
-          flex: none !important;
-        }
+      .board-field__zulopoly-field:first-child, .board-field__zulopoly-field:last-child {
+        flex: none;
+        width: 13%;
       }
     }
 
-    &.middle {
-      height: 76vh;
+    &.board-row--vertical {
+      height: 76%;
 
-      .middle-left {
-        width: 12vh;
-      }
-
-      .middle-right {
-        width: 12vh;
+      .board-column--middle-left, .board-column--middle-right {
+        width: 13%;
       }
     }
   }

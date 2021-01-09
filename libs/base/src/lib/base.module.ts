@@ -4,7 +4,7 @@ import {FormsModule} from "@angular/forms";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {SnackModule} from "./snack/snack.module";
 import {DialogModule} from "./dialog/dialog.module";
-import { ButtonModule } from 'primeng';
+import {ButtonModule} from 'primeng/button';
 
 const baseModules = [
   CommonModule,

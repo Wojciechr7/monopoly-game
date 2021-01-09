@@ -1,16 +1,19 @@
-import {Action, createReducer, on} from '@ngrx/store';
-import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
+import { Action, createReducer, on } from '@ngrx/store';
+import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import * as BoardActions from './board.actions';
-import {BoardEntity} from './board.models';
-import {BOARD_SIZE} from "../../game/helpers/game-settings";
-import {FieldBaseModel} from "../../../../../../../libs/api-interfaces/src/lib/models/fields/field-base.model";
+import { BoardEntity } from './board.models';
+import { BOARD_SIZE } from "../../game/helpers/game-settings";
+import { FieldBaseModel } from "../../../../../../../libs/api-interfaces/src/lib/models/fields/field-base.model";
+import { GameStateModel } from "../../../../../../../libs/api-interfaces/src/lib/models/game-state.model";
+import { DiceRolledModel } from "../../../../../../../libs/api-interfaces/src/lib/models/dice-rolled.model";
 
 export const BOARD_FEATURE_KEY = 'board';
 
 export interface State extends EntityState<BoardEntity> {
   boardSize: number;
-  /*  boardFields: BoardFieldModel[][];*/
   boardFields: FieldBaseModel[];
+  diceRoll: DiceRolledModel;
+  gameState: GameStateModel;
 }
 
 export interface BoardPartialState {
@@ -21,28 +24,54 @@ export const boardAdapter: EntityAdapter<BoardEntity> = createEntityAdapter<Boar
 
 export const initialState: State = boardAdapter.getInitialState({
   boardSize: BOARD_SIZE,
-  /*  boardFields: [...Array(BOARD_SIZE)].map(() => [...Array(BOARD_SIZE)])*/
-  boardFields: []
+  boardFields: [],
+  diceRoll: null,
+  gameState: null
 });
 
 const boardReducer = createReducer(
   initialState,
-  on(BoardActions.BoardComponentLoaded, state => {
-      /*      let index = 0;*/
+  on(BoardActions.BoardComponentLoaded, (state: State) => {
       return {
         ...state,
-        /*        boardFields: state.boardFields.map((xField: BoardFieldModel[]) => {
-                  return xField.map((yField: BoardFieldModel) => {
-                    return {...yField, index: index++}
-                  })
-                })*/
+        boardFields: [],
+        diceRoll: null,
+        gameState: null,
+        playerName: 'test'
       }
     }
   ),
-  on(BoardActions.loadFieldsSuccess, (state, {fields}) => {
+  on(BoardActions.loadFieldsSuccess, (state, { fields }) => {
       return {
         ...state,
         boardFields: [...fields.other, ...fields.powerPlantAndWaterworks, ...fields.property, ...fields.railways, ...fields.tax]
+      }
+    }
+  ),
+  on(BoardActions.loadGameSuccess, (state, { game }) => {
+      return {
+        ...state,
+        gameState: game,
+        diceRoll: {
+          leftDice: game.leftDice,
+          rightDice: game.rightDice,
+          playerId: game.currentPlayer
+        }
+      }
+    }
+  ),
+  on(BoardActions.leaveGameSuccess, (state) => {
+      return {
+        ...state,
+        gameState: null
+      }
+    }
+  ),
+  on(BoardActions.loadDiceRolledSuccess, (state, { dice }) => {
+      return {
+        ...state,
+        leftDiceRoll: dice.leftDice,
+        rightDiceRoll: dice.rightDice
       }
     }
   )
@@ -51,23 +80,3 @@ const boardReducer = createReducer(
 export function reducer(state: State | undefined, action: Action) {
   return boardReducer(state, action);
 }
-
-/*export function getFieldType(index: number): FieldTypeEnum {
-  switch(index) {
-    case 1:
-      return 1
-  }
-
-
-}*/
-// osobnme componenty na kazde pole, srodek jako 1 component, dyrektywa zwracajaca component zaleznie od indeksu
-
-/*
-boardFields: state.boardFields.map((field: BoardFieldModel[], x: number) => {
-  return field.map((field: BoardFieldModel, y: number) => {
-    return {
-      ...field,
-
-    }
-  })
-})*/

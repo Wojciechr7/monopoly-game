@@ -12,6 +12,20 @@
       "sourceRoot": "apps/zulopoly/src",
       "prefix": "zulopoly",
       "architect": {
+        "serve-with-services": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "ng serve api"
+              },
+              {
+                "command": "ng serve zulopoly"
+              }
+            ],
+            "parallel": true
+          }
+        },
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {

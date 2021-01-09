@@ -1,0 +1,22 @@
+<div *ngIf="diceState$ | async as diceState" class="wrapper" fxLayout="column">
+
+  <div class="container">
+    <div class="dice">
+      <ol #diceList [attr.data-roll]="diceState.leftDice" class="dice-list even-roll" id="dice-1">
+        <ng-container [ngTemplateOutlet]="diceElements"></ng-container>
+      </ol>
+      <ol #diceList [attr.data-roll]="diceState.rightDice" class="dice-list odd-roll" id="dice-2">
+        <ng-container [ngTemplateOutlet]="diceElements"></ng-container>
+      </ol>
+    </div>
+  </div>
+
+  <p-button (click)="rollDice()" class="roll-button" fxFlexAlign="center" label="Roll dice"
+            styleClass="ui-button-raised"></p-button>
+</div>
+
+<ng-template #diceElements>
+  <li *ngFor="let index of getDiceNumbers(6)" [attr.data-side]="index" class="dice-item">
+    <span *ngFor="let dot of getDiceNumbers(index)" class="dot"></span>
+  </li>
+</ng-template>
