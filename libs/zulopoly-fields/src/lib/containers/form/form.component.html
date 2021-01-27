@@ -1,0 +1,5 @@
+<div class='p-flex'>
+  <ng-container *ngFor='let field of formConfig.fields'>
+    <ng-container zulopolyField [config]='field' [control]='getControl(field.name)'></ng-container>
+  </ng-container>
+</div>

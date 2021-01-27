@@ -18,7 +18,8 @@
     "paths": {
       "@zulopoly/api-interfaces": ["libs/api-interfaces/src/index.ts"],
       "@zulopoly/base": ["libs/base/src/index.ts"],
-      "@zulopoly/style": ["libs/style/src/index.ts"]
+      "@zulopoly/style": ["libs/style/src/index.ts"],
+      "@zulopoly/zulopoly-fields": ["libs/zulopoly-fields/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

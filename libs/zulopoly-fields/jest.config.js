@@ -1,7 +1,7 @@
 module.exports = {
-  name: 'base',
+  name: 'zulopoly-fields',
   preset: '../../jest.config.js',
-  coverageDirectory: '../../coverage/libs/common',
+  coverageDirectory: '../../coverage/libs/zulopoly-fields',
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
     'jest-preset-angular/build/AngularSnapshotSerializer.js',

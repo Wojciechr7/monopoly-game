@@ -103,10 +103,7 @@
               "apps/zulopoly/tsconfig.app.json",
               "apps/zulopoly/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/zulopoly/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/zulopoly/**"]
           }
         },
         "test": {
@@ -141,13 +138,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/zulopoly-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/zulopoly-e2e/**"
-            ]
+            "tsConfig": ["apps/zulopoly-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/zulopoly-e2e/**"]
           }
         }
       }
@@ -165,9 +157,7 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": [
-              "apps/api/src/assets"
-            ]
+            "assets": ["apps/api/src/assets"]
           },
           "configurations": {
             "production": {
@@ -196,10 +186,7 @@
               "apps/api/tsconfig.app.json",
               "apps/api/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/api/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/api/**"]
           }
         },
         "test": {
@@ -225,10 +212,7 @@
               "libs/api-interfaces/tsconfig.lib.json",
               "libs/api-interfaces/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/api-interfaces/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/api-interfaces/**"]
           }
         },
         "test": {
@@ -254,10 +238,7 @@
               "libs/base/tsconfig.lib.json",
               "libs/base/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/base/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/base/**"]
           }
         },
         "test": {
@@ -289,10 +270,7 @@
               "libs/style/tsconfig.lib.json",
               "libs/style/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/style/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/style/**"]
           }
         },
         "test": {
@@ -302,6 +280,38 @@
             "tsConfig": "libs/style/tsconfig.spec.json",
             "passWithNoTests": true,
             "setupFile": "libs/style/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "zulopoly-fields": {
+      "projectType": "library",
+      "root": "libs/zulopoly-fields",
+      "sourceRoot": "libs/zulopoly-fields/src",
+      "prefix": "zulopoly",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/zulopoly-fields/tsconfig.lib.json",
+              "libs/zulopoly-fields/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/zulopoly-fields/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/zulopoly-fields/jest.config.js",
+            "tsConfig": "libs/zulopoly-fields/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/zulopoly-fields/src/test-setup.ts"
           }
         }
       },
