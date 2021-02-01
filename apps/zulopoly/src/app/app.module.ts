@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { RouterModule } from '@angular/router';
-import { LayoutModule } from './modules/layout/layout.module';
+import { MainContainerModule } from './modules/main-container/main-container.module';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './+state/app.effects';
 import { NxModule } from '@nrwl/angular';
@@ -14,6 +14,7 @@ import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { Socket, SocketIoModule } from "ngx-socket-io";
+import { AppRoutingModule } from './app-routing.module';
 
 @Injectable()
 export class SocketChat extends Socket {
@@ -62,9 +63,10 @@ export class SocketGame extends Socket {
     EffectsModule.forRoot([AppEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     RouterModule,
-    LayoutModule,
+    MainContainerModule,
     StoreRouterConnectingModule.forRoot(),
     SocketIoModule,
+    AppRoutingModule
   ],
   providers: [SocketChat, SocketGame],
   bootstrap: [AppComponent]

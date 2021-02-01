@@ -14,14 +14,8 @@ export class UserController {
   }
 
   @Post('register')
-  async register(@Body() registerUserDto: RegisterUserDto): Promise<any> {
+  async register(@Body() registerUserDto: RegisterUserDto): Promise<void> {
     return await this.userService.addUser(registerUserDto);
-  }
-
-  @Get('checkEmailAvailability/:email')
-  async checkEmailAvailability(@Param ('email') email: string): Promise<OptionAvailableEnum> {
-    const v = await this.userRepository.getByEmail(email)
-    return v ? OptionAvailableEnum.NotAvailable: OptionAvailableEnum.Available;
   }
 
   @Get('checkLoginAvailability/:login')
@@ -30,8 +24,5 @@ export class UserController {
 
     return v ? OptionAvailableEnum.NotAvailable: OptionAvailableEnum.Available;
   }
-
-
-
 
 }

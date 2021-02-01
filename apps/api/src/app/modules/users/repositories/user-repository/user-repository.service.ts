@@ -11,16 +11,16 @@ export class UserRepositoryService {
   ) {
   }
 
-  async addUser(user: User): Promise<User> {
+  async addUser(user: User): Promise<UserDocument> {
     const userCreated = new this.userModel(user);
     return userCreated.save();
   }
 
-  async getByEmail(email: string): Promise<User> {
+  async getByEmail(email: string): Promise<UserDocument> {
     return this.userModel.findOne({ email }).exec();
   }
 
-  async getByLogin(login: string): Promise<User> {
+  async getByLogin(login: string): Promise<UserDocument> {
     return this.userModel.findOne({ login }).exec();
   }
 

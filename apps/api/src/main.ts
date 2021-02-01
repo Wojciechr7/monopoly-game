@@ -8,12 +8,14 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';
-import { ApplicationModule } from '@angular/core';
+import * as cookieParser from 'cookie-parser';
+import { cookieSecret } from '../settings';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
+  app.use(cookieParser(cookieSecret));
   app.useGlobalPipes(new ValidationPipe());
 
   useContainer(app.select(AppModule), {fallbackOnErrors: true})

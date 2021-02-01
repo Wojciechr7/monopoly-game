@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { ChatModule } from './modules/chat/chat.module';
 import { GameModule } from "./modules/game/game.module";
 import { MongooseModule } from '@nestjs/mongoose';
-import { ConnectionString } from '../../connection';
+import { ConnectionString } from '../../settings';
 import { UsersModule } from './modules/users/users.module';
 
 @Module({
