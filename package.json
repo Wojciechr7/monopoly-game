@@ -41,7 +41,7 @@
     "@angular/router": "9.0.0",
     "@fullcalendar/core": "^4.4.0",
     "@nestjs/common": "^6.8.3",
-    "@nestjs/core": "^6.8.3",
+    "@nestjs/core": "^9.0.5",
     "@nestjs/mongoose": "^6.3.1",
     "@nestjs/platform-express": "^6.8.3",
     "@nestjs/platform-socket.io": "^6.11.11",
